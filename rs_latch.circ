@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project source="5.0.0" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v5.0.0(https://github.com/logisim-evolution/).
+
+  <lib desc="#Wiring" name="0">
+    <tool name="Pin">
+      <a name="appearance" val="classic" />
+    </tool>
+  </lib>
+  <lib desc="#Gates" name="1" />
+  <lib desc="#Base" name="2" />
+  <main name="rs_latch_compare" />
+  <options>
+    <a name="gateUndefined" val="ignore" />
+    <a name="simlimit" val="1000" />
+    <a name="simrand" val="0" />
+  </options>
+  <mappings />
+  <toolbar>
+    <tool name="Poke Tool" />
+    <tool name="Edit Tool" />
+    <sep />
+    <tool name="Pin" />
+    <tool name="NOR Gate" />
+  </toolbar>
+  <vhdl name="rs_latch" appearance="logisim_evolution">library ieee;
+use ieee.std_logic_1164.all;
+
+entity rs_latch is
+    port (
+        s   : in  std_logic;
+        r   : in  std_logic;
+        q   : out std_logic;
+        q_n : out std_logic
+    );
+end entity rs_latch;
+
+architecture nor_gates of rs_latch is
+    signal q_feedback   : std_logic;
+    signal q_n_feedback : std_logic;
+begin
+    q_feedback   &lt;= r nor q_n_feedback;
+    q_n_feedback &lt;= s nor q_feedback;
+
+    q   &lt;= q_feedback;
+    q_n &lt;= q_n_feedback;
+end architecture nor_gates;
+</vhdl>
+  <circuit name="rs_latch_compare">
+    <a name="circuit" val="rs_latch_compare" />
+    <a name="simulationFrequency" val="1.0" />
+    <comp lib="0" loc="(80,180)" name="Pin">
+      <a name="appearance" val="classic" />
+      <a name="initial" val="0x1" />
+      <a name="label" val="R" />
+    </comp>
+    <comp lib="0" loc="(80,380)" name="Pin">
+      <a name="appearance" val="classic" />
+      <a name="label" val="S" />
+    </comp>
+    <comp lib="0" loc="(790,200)" name="Pin">
+      <a name="appearance" val="classic" />
+      <a name="facing" val="west" />
+      <a name="label" val="Q_gate" />
+      <a name="type" val="output" />
+    </comp>
+    <comp lib="0" loc="(790,360)" name="Pin">
+      <a name="appearance" val="classic" />
+      <a name="facing" val="west" />
+      <a name="label" val="Q_n_gate" />
+      <a name="type" val="output" />
+    </comp>
+    <comp lib="1" loc="(650,200)" name="NOR Gate" />
+    <comp lib="1" loc="(650,360)" name="NOR Gate" />
+    <wire from="(360,180)" to="(590,180)" />
+    <wire from="(360,380)" to="(590,380)" />
+    <wire from="(550,320)" to="(550,340)" />
+    <wire from="(550,320)" to="(690,320)" />
+    <wire from="(550,340)" to="(590,340)" />
+    <wire from="(650,200)" to="(690,200)" />
+    <wire from="(650,360)" to="(720,360)" />
+    <wire from="(690,200)" to="(690,320)" />
+    <wire from="(690,200)" to="(790,200)" />
+    <wire from="(720,360)" to="(790,360)" />
+    <wire from="(720,360)" to="(720,440)" />
+    <wire from="(310,440)" to="(720,440)" />
+    <wire from="(310,220)" to="(310,440)" />
+    <wire from="(310,220)" to="(590,220)" />
+    <comp name="Text" loc="(500,45)" lib="2">
+      <a name="text" val="Gate-level implementation" />
+      <a name="font" val="SansSerif bold 16" />
+    </comp>
+    <comp name="Text" loc="(490,540)" lib="2">
+      <a name="text" val="VHDL implementation" />
+      <a name="font" val="SansSerif bold 16" />
+    </comp>
+    <comp name="rs_latch" loc="(610,580)" />
+    <wire from="(80,380)" to="(120,380)" />
+    <wire from="(120,380)" to="(360,380)" />
+    <wire from="(120,380)" to="(120,580)" />
+    <wire from="(120,580)" to="(390,580)" />
+    <wire from="(80,180)" to="(160,180)" />
+    <wire from="(160,180)" to="(360,180)" />
+    <wire from="(160,180)" to="(160,600)" />
+    <wire from="(160,600)" to="(390,600)" />
+    <comp name="Pin" loc="(720,580)" lib="0">
+      <a name="label" val="Q_vhdl" />
+      <a name="type" val="output" />
+      <a name="facing" val="west" />
+    </comp>
+    <wire from="(610,580)" to="(720,580)" />
+    <comp name="Pin" loc="(720,600)" lib="0">
+      <a name="label" val="Q_n_vhdl" />
+      <a name="type" val="output" />
+      <a name="facing" val="west" />
+    </comp>
+    <wire from="(610,600)" to="(720,600)" />
+  </circuit>
+</project>
